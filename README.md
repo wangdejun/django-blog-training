@@ -36,6 +36,8 @@ windows系统下
 ```python
 pip install django
 ```
+#### 1.3.1 依赖清单
+查看项目中的requirement.txt
 
 ### 1.4 建立 Django 工程
 
