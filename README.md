@@ -15,7 +15,10 @@ pip install python
 pip install virtualenv
 ```
 
-* 为vitualenv指定python版本
+* 为vitualenv指定名字和python版本，比如我指定我的虚拟环境的名字是python-course-env,虚拟环境依赖的python版本是3.5
+```
+virtualenv python-course-env --python=python3.5
+```
 
 * 激活vitualenv
 
@@ -25,9 +28,10 @@ source ../../bin/activate
 ## 在我的机器上是这个路径
 source ~/Desktop/python-course/Course/python_code/python-course-env/bin/activate
 ```
-windows系统下
+windows系统下,cmd窗口或者运行/python-course-env/Script/下的activate命令
 ```python
-运行script脚本
+cd /python-course-env/Script/
+activate
 ```
 
 ### 1.3 安装 Django
@@ -62,7 +66,7 @@ urlpatterns = [
 ]
 ```
 
-blog/urls.py¶
+blog/urls.py
 ```python
 from django.urls import path
 from . import views
@@ -193,7 +197,7 @@ class Post(models.Model):
     author = models.ForeignKey(User)
 ```
 
-# 4.迁移数据库(让Django帮我们完成翻译)
+# 4.迁移数据库(让Django帮我们完成建表语句)
 
 ### 4.1 迁移
 
@@ -439,25 +443,25 @@ blog\
 
 ### 5.3 要点总结
 
-* Make sure that django.contrib.staticfiles is included in your INSTALLED_APPS.
+* 保证django.contrib.staticfiles在你的settings文件INSTALLED_APPS里.
 
-* In your settings file, define STATIC_URL, for example:
+* 在settings文件里, 定义静态文件路径STATIC_URL,例如:
 ```python
 STATIC_URL = '/static/'
 ```
-* In your templates, use the static template tag to build the URL for the given relative path using the configured STATICFILES_STORAGE.
+* 在你的模板里使用静态模板标签为静态文件相对路径构建URL STATICFILES_STORAGE.
 ```html
 {% load static %}
 <img src="{% static "my_app/example.jpg" %}" alt="My image">
 ```
 
-* Store your static files in a folder called static in your app. For 
+* 保存你的静态文件 
 ```html
 example my_app/static/my_app/example.jpg.
 ```
 
 
-# 6-X. 在 Django Admin 后台发布文章
+# 6. 在 Django Admin 后台发布文章
 
 ## 6.1 创建 Admin 后台管理员账户
 
@@ -613,11 +617,6 @@ templates/blog/index.html
 {% endfor %}
 ```
 
-# 这是一个标题
-* list 
-* list
-* list
-
 ## 7.4 模板继承
 
 
@@ -646,9 +645,15 @@ templates/base.html
 
 # 8 使用markdown语法和代码高亮
 
-为了让博客文章具有良好的排版，显示更加丰富的格式，我们使用 Markdown 语法来书写我们的博文。Markdown 是一种 HTML 文本标记语言，只要遵循它约定的语法格式，Markdown 的渲染器就能够把我们写的文章转换为标准的 HTML 文档，从而让我们的文章呈现更加丰富的格式，例如标题、列表、代码块等等 HTML 元素。由于 Markdown 语法简单直观，不用超过 5 分钟就可以掌握常用的标记语法，因此大家青睐使用 Markdown 书写 HTML 文档。下面让我们的博客也支持使用 Markdown 书写。
+为了让博客文章具有良好的排版，显示更加丰富的格式，我们使用 Markdown 语法来书写我们的博文。
 
-### 8.1 安装
+Markdown 是一种 HTML 文本标记语言，只要遵循它约定的语法格式，Markdown 的渲染器就能够把我们写的文章转换为标准的 HTML 文档，从而让我们的文章呈现更加丰富的格式，例如标题、列表、代码块等等 HTML 元素。
+
+由于 Markdown 语法简单直观，不用超过 5 分钟就可以掌握常用的标记语法，因此大家青睐使用 Markdown 书写 HTML 文档。
+
+下面让我们的博客也支持使用 Markdown 书写。
+
+## 8.1 安装
 
 
 ```python
@@ -670,7 +675,10 @@ def detail(request, pk):
     return render(request, 'blog/detail.html', context={'post': post})
 ```
 
-### 8.2 safe filter
+## 8.2 safe filter
+
+避免转义，在模板中引用模板标签的时候请使用管道filter符 safe
+{{post.body|safe}}
 
 ## 8.3 代码高亮
 
@@ -807,7 +815,7 @@ templates/base.html
 
 # 10 分类与归档
 
-### 10.1分类
+## 10.1 分类 category
 
 
 ```python
@@ -855,7 +863,7 @@ templates/base.html
 {% endfor %}
 ```
 
-### 归档
+## 归档 archives
 
 
 ```python
